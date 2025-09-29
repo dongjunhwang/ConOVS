@@ -1,4 +1,5 @@
 # OVS Meets Continual Learning: Towards Sustainable Open-Vocabulary Segmentation (NeurIPS 2025)
+[[Paper (NeurIPS 2025)](https://neurips.cc/virtual/2025/poster/115181)] [Paper (arXiv)]
 
 by [Dongjun Hwang](https://dongjunhwang.github.io/), [Yejin Kim](https://sites.google.com/view/yejin-c-kim/), [Minyoung Lee](https://sites.google.com/view/minyoung-lee), [Seong Joon Oh](https://coallaoh.github.io/), [Junsuk Choe](https://sites.google.com/site/junsukchoe/)
 

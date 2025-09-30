@@ -6,7 +6,7 @@ by [Dongjun Hwang](https://dongjunhwang.github.io/), [Yejin Kim](https://sites.g
 <br>
 
 <div align="center">
-  <img width="600" alt="image" src="https://github.com/user-attachments/assets/72472a63-399f-40d2-8c73-b499caaa04aa">
+  <img width="600" alt="image" src="https://github.com/user-attachments/assets/39bdebba-9353-4571-8ea0-3af1b2591d9b">
 </div>
 
 <br>

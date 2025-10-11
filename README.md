@@ -27,14 +27,14 @@ This code is based on [**fc-clip**](https://github.com/bytedance/fc-clip) and [*
 - [X] Update code  
 
 ---
-## Preparation
-### Installation
+# 📕 Preparation
+## Installation
 See [installation instructions](INSTALL.md).
 
-### Preparing Datasets
+## Preparing Datasets
 See [Preparing Datasets](datasets/README.md).
 
-### Preparing a Pre-trained Model
+## Preparing a Pre-trained Model
 
 Please run the below command and put that on the root directory of this repo.
 ```bash
@@ -42,7 +42,7 @@ gdown 1csp3trVKhc90aUZO4S__V23iwsQTe0od
 ```
 And move this file to `./checkpoints/fcclip_cocopan.pth`.
 
-### Preparing the Evaluation
+## Preparing the Evaluation
 
 You can evaluate all the below method without training the model as we already provide the checkpoint [[download link](https://drive.google.com/drive/folders/1kzRaPB_BVh37a9dTYVE66ueRfIg--Fbt?usp=sharing)].
 
@@ -67,14 +67,13 @@ ConOVS/
 - **ConOVS**: You should download the checkpoint from `./finetuning` in the link above, and MVN distribution from [here](https://drive.google.com/drive/folders/1fWsYEORvCax0lVc4txu5yKUBHnQXugAg?usp=drive_link).
 
 ---
-
-## Getting Started with ConOVS
+# ⭐️ Getting Started with ConOVS
 
 This document provides a brief intro of the usage of our method and other comparisons.
 
 This document is derived from  [Getting Started with Detectron2](https://github.com/facebookresearch/detectron2/blob/master/GETTING_STARTED.md).
 
-### Process of Our Method
+## Process of Our Method
 Our method consists of two main steps: 
 - (1) fine-tuning the fc-clip model on the first dataset, and 
 - (2) making the MVN distribution (prototypes) to combine the fine-tuned models.
@@ -95,9 +94,9 @@ then beginning with fine-tuning fc-clip:
 # scripts/(scenario number)/(method name).sh
 bash scripts/s1/finetuning.sh
 ```
-Other methods can be trained in a similar manner. For example, to train the retraining model, use
+Other methods can be trained in a similar manner. For example, to train the model with EWC, use
 ```bash
-bash scripts/s1/retraining.sh
+bash scripts/s1/ewc.sh
 ```
 
 ### (2) Generating the Multivariate Normal Distribution
@@ -119,6 +118,7 @@ bash scripts/s1/finetuning_eval.sh
 ```
 For more options, see `python train_net.py -h`.
 
-## Citation
+---
+# Citation
 
 TBD

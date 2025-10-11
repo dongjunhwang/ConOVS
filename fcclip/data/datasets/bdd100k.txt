@@ -1,0 +1,41 @@
+0:  unlabeled
+1:  dynamic
+2:  ego vehicle
+3:  ground
+4:  static
+5:  parking
+6:  rail track
+7:  road
+8:  sidewalk
+9:  bridge
+10: building
+11: fence
+12: garage
+13: guard rail
+14: tunnel
+15: wall
+16: banner
+17: billboard
+18: lane divider
+19: parking sign
+20: pole
+21: polegroup
+22: street light
+23: traffic cone
+24: traffic device
+25: traffic light
+26: traffic sign
+27: traffic sign frame
+28: terrain
+29: vegetation
+30: sky
+31: person
+32: rider
+33: bicycle
+34: bus
+35: car
+36: caravan
+37: motorcycle
+38: trailer
+39: train
+40: truck

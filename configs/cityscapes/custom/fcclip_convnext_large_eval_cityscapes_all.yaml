@@ -1,0 +1,44 @@
+_BASE_: ../maskformer2_R50_bs16_50ep.yaml
+OUTPUT_DIR: ./output/cityscapes_all
+
+INPUT:
+  MIN_SIZE_TEST: 1024
+  MAX_SIZE_TEST: 2560
+
+SOLVER:
+  TRAINER: "TrainerER"
+
+MODEL:
+  ER:
+    BUFFER_SIZE: 100
+    NUM_CLASSES_LIST: [133, 150]
+    ALL_SAMPLES: False
+    JOINT_TRAINING_ALL: True
+  META_ARCHITECTURE: "FCCLIPER"
+  SEM_SEG_HEAD:
+    NAME: "FCCLIPHead"
+    NUM_CLASSES: 19
+  # backbone part.
+  BACKBONE:
+    NAME: "CLIP"
+  WEIGHTS: ""
+  PIXEL_MEAN: [122.7709383, 116.7460125, 104.09373615]
+  PIXEL_STD: [68.5005327, 66.6321579, 70.32316305]
+  FC_CLIP:
+    CLIP_MODEL_NAME: "convnext_large_d_320"
+    CLIP_PRETRAINED_WEIGHTS: "laion2b_s29b_b131k_ft_soup"
+    EMBED_DIM: 768
+    GEOMETRIC_ENSEMBLE_ALPHA: 0.4
+    GEOMETRIC_ENSEMBLE_BETA: 0.8
+  MASK_FORMER:
+    NUM_OBJECT_QUERIES: 250
+    TEST:
+      SEMANTIC_ON: True
+      INSTANCE_ON: True
+      PANOPTIC_ON: True
+      OBJECT_MASK_THRESHOLD: 0.0
+
+DATASETS:
+  TRAIN: ("openvocab_cityscapes_fine_panoptic_train",)
+  TEST: ("openvocab_cityscapes_fine_panoptic_val",)
+  ER_OLD_DATASETS: ("openvocab_coco_2017_train_panoptic_with_sem_seg","openvocab_ade20k_panoptic_train",)

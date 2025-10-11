@@ -29,7 +29,7 @@ This code is based on [**fc-clip**](https://github.com/bytedance/fc-clip) and [*
 ---
 # 📕 Preparation
 ## Installation
-See [installation instructions](INSTALL.md).
+See [Installation Instructions](INSTALL.md).
 
 ## Preparing Datasets
 See [Preparing Datasets](datasets/README.md).

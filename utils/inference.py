@@ -8,8 +8,6 @@ import torch
 from torch import nn
 import os
 from torch.nn import functional as F
-from PIL import Image
-import numpy as np
 
 from detectron2.utils.comm import get_world_size
 from detectron2.utils.logger import log_every_n_seconds
@@ -20,7 +18,74 @@ from detectron2.evaluation import (
     inference_context,
 )
 
-from demo.predictor import OpenVocabVisualizer
+from detectron2.utils.visualizer import ColorMode, Visualizer
+import detectron2.utils.visualizer as d2_visualizer
+
+
+class OpenVocabVisualizer(Visualizer):
+    def draw_panoptic_seg(self, panoptic_seg, segments_info, area_threshold=None, alpha=0.7):
+        """
+        Draw panoptic prediction annotations or results.
+
+        Args:
+            panoptic_seg (Tensor): of shape (height, width) where the values are ids for each
+                segment.
+            segments_info (list[dict] or None): Describe each segment in `panoptic_seg`.
+                If it is a ``list[dict]``, each dict contains keys "id", "category_id".
+                If None, category id of each pixel is computed by
+                ``pixel // metadata.label_divisor``.
+            area_threshold (int): stuff segments with less than `area_threshold` are not drawn.
+
+        Returns:
+            output (VisImage): image object with visualizations.
+        """
+        pred = d2_visualizer._PanopticPrediction(panoptic_seg, segments_info, self.metadata)
+
+        if self._instance_mode == ColorMode.IMAGE_BW:
+            self.output.reset_image(self._create_grayscale_image(pred.non_empty_mask()))
+        # draw mask for all semantic segments first i.e. "stuff"
+        for mask, sinfo in pred.semantic_masks():
+            category_idx = sinfo["category_id"]
+            try:
+                mask_color = [x / 255 for x in self.metadata.stuff_colors[category_idx]]
+            except AttributeError:
+                mask_color = None
+
+            text = self.metadata.stuff_classes[category_idx].split(',')[0]
+            self.draw_binary_mask(
+                mask,
+                color=mask_color,
+                edge_color=d2_visualizer._OFF_WHITE,
+                text=text,
+                alpha=alpha,
+                area_threshold=area_threshold,
+            )
+        # draw mask for all instances second
+        all_instances = list(pred.instance_masks())
+        if len(all_instances) == 0:
+            return self.output
+        masks, sinfo = list(zip(*all_instances))
+        category_ids = [x["category_id"] for x in sinfo]
+
+        try:
+            scores = [x["score"] for x in sinfo]
+        except KeyError:
+            scores = None
+        stuff_classes = self.metadata.stuff_classes
+        stuff_classes = [x.split(',')[0] for x in stuff_classes]
+        labels = d2_visualizer._create_text_labels(
+            category_ids, scores, stuff_classes, [x.get("iscrowd", 0) for x in sinfo]
+        )
+
+        try:
+            colors = [
+                self._jitter([x / 255 for x in self.metadata.stuff_colors[c]]) for c in category_ids
+            ]
+        except AttributeError:
+            colors = None
+        self.overlay_instances(masks=masks, labels=labels, assigned_colors=colors, alpha=alpha)
+
+        return self.output
 
 
 def inference_on_dataset(

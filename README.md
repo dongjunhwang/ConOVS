@@ -119,5 +119,11 @@ For more options, see `python train_net.py -h`.
 
 ---
 # Citation
-
-TBD
+```bib
+@inproceedings{hwangovs,
+  title={OVS Meets Continual Learning: Towards Sustainable Open-Vocabulary Segmentation},
+  author={Hwang, Dongjun and Kim, Yejin and Lee, Minyoung and Oh, Seong Joon and Choe, Junsuk},
+  booktitle={The Thirty-ninth Annual Conference on Neural Information Processing Systems},
+  year={2025}
+}
+```
